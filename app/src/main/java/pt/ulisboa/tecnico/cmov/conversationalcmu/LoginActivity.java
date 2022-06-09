@@ -16,9 +16,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
-    String myUrl = "http://192.168.56.1:8080";
-    private final OkHttpClient client = new OkHttpClient();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,24 +28,14 @@ public class LoginActivity extends AppCompatActivity {
         EditText pass = (EditText)findViewById(R.id.passwordEditText);
 
         new Thread(() -> {
-            Request request = new Request.Builder()
-                    .url(myUrl + "/login?user=" + user.getText().toString() + "&pass=" + pass.getText().toString())
-                    .build();
-            try (Response response = client.newCall(request).execute()) {
-                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-                Headers responseHeaders = response.headers();
-                for (int i = 0; i < responseHeaders.size(); i++) {
-                    Log.d("headers",responseHeaders.name(i) + ": " + responseHeaders.value(i));
-                }
-
-                Log.d("body",response.body().string());
+            try {
+                Response response = RequestHandler.buildLoginRequest(user, pass);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }).start();
         Intent i = new Intent(getApplicationContext(), ChatListActivity.class);
+        i.putExtra("userName", user.getText().toString());
         startActivity(i);
     }
 }

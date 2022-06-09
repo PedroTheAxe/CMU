@@ -18,6 +18,7 @@
             android:layout_height="match_parent"
             android:gravity="top">
             <TextView
+                android:id="@+id/TopID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Available Chatrooms"
@@ -35,19 +36,27 @@
                 android:text="Join chat"
                 android:textStyle="bold"/>
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_below="@+id/TopID"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tap chat type to create new chat" />
+
 
         </RelativeLayout>
 
     </Toolbar>
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tripletab"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginTop="56dp"
         android:backgroundTint="#00000000"
-        app:tabIndicatorColor="@color/white"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="@color/black"
+        app:tabTextColor="@color/white"
         app:tabIndicatorHeight="3dp"
         >
 
@@ -79,11 +88,16 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <FrameLayout
+        android:id="@+id/fragContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginTop="112dp"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar">
+        </androidx.recyclerview.widget.RecyclerView>
+    </FrameLayout>
 </RelativeLayout>

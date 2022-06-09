@@ -19,7 +19,7 @@ import pt.ulisboa.tecnico.cmov.conversationalcmu.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    String myUrl = "http://192.168.56.1:8080";
+    String myUrl = "http://192.168.1.80:8080";
     private final OkHttpClient client = new OkHttpClient();
     TextView resultsTextView;
     Button displayData;
