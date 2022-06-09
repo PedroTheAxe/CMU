@@ -20,9 +20,8 @@ public class ChatController {
         repository.save(newChat2);
     }
     //idk if this produces does anything
-    @GetMapping(value = "/chats", produces = "application/json")
-    public List<Chat> getUsers() {
+    @GetMapping(value = "/chats")
+    public List<Chat> getChat() {
         return repository.getChat();
     }
-
 }

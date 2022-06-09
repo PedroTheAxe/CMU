@@ -3,7 +3,7 @@ package pt.tecnico.ulisboa.conversationalist.backend;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "chat")
+@Table(name = "account")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

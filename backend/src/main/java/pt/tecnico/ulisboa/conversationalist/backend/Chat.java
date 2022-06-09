@@ -1,6 +1,7 @@
 package pt.tecnico.ulisboa.conversationalist.backend;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "chat")
@@ -13,7 +14,6 @@ public class Chat {
     private String chatName;
     @Column(name = "chatType")
     private String chatType;
-
     public Chat() {
 
     }
@@ -21,6 +21,7 @@ public class Chat {
     public Chat(String chatName, String chatType) {
         this.chatName = chatName;
         this.chatType = chatType;
+
     }
 
     public String getChatName() {
