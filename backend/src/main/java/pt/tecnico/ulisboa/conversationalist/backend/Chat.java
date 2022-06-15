@@ -14,11 +14,14 @@ public class Chat {
     private String chatName;
     @Column(name = "chatType")
     private String chatType;
+    @Column(name = "invitelink")
+    private String inviteLink;
     public Chat() {
 
     }
 
-    public Chat(String chatName, String chatType) {
+    public Chat(String chatName, String chatType
+    ) {
         this.chatName = chatName;
         this.chatType = chatType;
 
@@ -38,6 +41,14 @@ public class Chat {
 
     public void setChatType(ChatType chatType) {
         this.chatType = chatType.toString();
+    }
+
+    public String getInviteLink() {
+        return inviteLink;
+    }
+
+    public void setInviteLink(String inviteLink) {
+        this.inviteLink = inviteLink;
     }
 
     public enum ChatType {

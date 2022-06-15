@@ -14,8 +14,8 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
     private static List<WebSocketSession> clientSessions = new ArrayList<>();
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws IOException {
-        session.setTextMessageSizeLimit(200000);
-        session.setBinaryMessageSizeLimit(200000);
+        session.setTextMessageSizeLimit(999999);
+        session.setBinaryMessageSizeLimit(999999);
         System.out.println("estou aqui");
         if (!clientSessions.contains(session)) {
             clientSessions.add(session);
@@ -45,7 +45,11 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
         String jsonString = "[{\"chatMessageSender\":" + "\"" + msg[1] + "\"" + ", \"chatMessageContent\":" + "\"" + msg[2] + "\"" + ", \"chatMessageTimestamp\":" + "\"" + timestamp + "\"" + "}]";
         System.out.println(jsonString);
         for (WebSocketSession ses: clientSessions) {
-            ses.sendMessage(new TextMessage(jsonString));
+            try {
+                ses.sendMessage(new TextMessage(jsonString));
+            } catch (Exception e) {
+                ses.close();
+            }
         }
     }
 }

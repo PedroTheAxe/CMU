@@ -1,6 +1,8 @@
 package pt.tecnico.ulisboa.conversationalist.backend;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "account")
@@ -13,6 +15,9 @@ public class User {
     private String username;
     @Column(name = "credentials")
     private String password;
+    @Column(name = "availablechats")
+    @ElementCollection(targetClass = String.class)
+    private List<String> availableChats;
 
     public User() {
 
@@ -21,6 +26,7 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.availableChats = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -37,5 +43,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<String> getAvailableChats() {
+        return availableChats;
+    }
+
+    public void addAvailableChats(String availableChats) {
+        this.availableChats.add(availableChats);
     }
 }

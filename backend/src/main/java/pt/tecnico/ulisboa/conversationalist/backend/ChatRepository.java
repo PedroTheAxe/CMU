@@ -10,4 +10,7 @@ interface ChatRepository extends JpaRepository<Chat, String> {
 
     @Query(value = "SELECT * FROM chat", nativeQuery = true)
     List<Chat> getChat();
+
+    @Query(value = "select * from chat where invitelink = :invitelinkurl", nativeQuery = true)
+    Chat findChatByInviteLink(@Param("invitelinkurl") String invitation);
 }
