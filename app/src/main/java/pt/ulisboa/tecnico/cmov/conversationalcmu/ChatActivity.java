@@ -39,6 +39,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import okhttp3.Headers;
@@ -149,7 +150,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onCloseReceived() {
                 webSocketClient.close();
-            }
+            } //fechar sessao com erro qd houver bug
         };
 
         webSocketClient.setConnectTimeout(10000);
@@ -192,34 +193,21 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void sendAttachment(View view) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        someActivityResultLauncher.launch(photoPickerIntent);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        someActivityResultLauncher.launch(intent);
     }
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
+            new ActivityResultCallback<ActivityResult>() { //ver content type ou por tudo em cima uns dos outros e popular apenas de acordo com os fields
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    //setContentView(R.layout.chat_images);
-                    //ImageView imageView = (ImageView) findViewById(R.id.imagePicture);
+                    setContentView(R.layout.chat_images);
+                    ImageView imageView = (ImageView) findViewById(R.id.imagePicture);
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        Uri uri = data.getData();
-                        //imageView.setImageURI(uri);
-                        ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), uri);
-                        try {
-                            Bitmap bitmap = ImageDecoder.decodeBitmap(source);
-                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                            byte[] imageBytes = baos.toByteArray();
-                            String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-                            Log.e("String da imagem", encodedImage);
-                            webSocketClient.send("imagem/" + userName + "/" + encodedImage);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        Uri uri = data.getData(); //local password stored in phone guest account -- on bind chama o item e fico a ver
+                        imageView.setImageURI(uri); //avisar opr websocket de imagem e ir buscar atraves de rest
                     }
                 }
             });

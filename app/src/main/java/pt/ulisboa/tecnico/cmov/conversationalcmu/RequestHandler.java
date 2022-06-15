@@ -23,9 +23,9 @@ public class RequestHandler {
         return response;
     }
 
-    public static Response buildChatListRequest() throws IOException {
+    public static Response buildChatListRequest(String userName) throws IOException {
         Request request = new Request.Builder()
-                .url(myUrl + "/chats")
+                .url(myUrl + "/chats?username=" + userName)
                 .build();
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
@@ -35,6 +35,35 @@ public class RequestHandler {
     public static Response buildChatMessagesRequest(String chatRoomName) throws IOException {
         Request request = new Request.Builder()
                 .url(myUrl + "/chatrooms?chatroomname=" + chatRoomName)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        return response;
+    }
+
+    public static Response createPublicChatRequest(String chatRoomName) throws IOException {
+        Request request = new Request.Builder()
+                .url(myUrl + "/createchat?chatname=" + chatRoomName + "&chattype=public")
+                .build();
+        Log.e("URL","/createchat?chatname=" + chatRoomName + "&chattype=public");
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        return response;
+    }
+
+    public static Response createPrivateChatRequest(String chatRoomName, String inviteLink) throws IOException {
+        Request request = new Request.Builder()
+                .url(myUrl + "/createchat?chatname=" + chatRoomName + "&chattype=private&invitelink=" + inviteLink)
+                .build();
+        Log.e("URL",myUrl + "/createchat?chatname=" + chatRoomName + "&chattype=private&invitelink=" + inviteLink);
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        return response;
+    }
+
+    public static Response joinWithInviteRequest(String chatRoomName, String inviteLink) throws IOException {
+        Request request = new Request.Builder()
+                .url(myUrl + "/joinprivatechat?username=" + chatRoomName + "&invitelink=" + inviteLink)
                 .build();
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);

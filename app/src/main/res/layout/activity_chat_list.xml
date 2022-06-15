@@ -50,43 +50,42 @@
 
     </Toolbar>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tripletab"
-        android:layout_width="match_parent"
+
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginTop="56dp"
-        android:backgroundTint="#00000000"
-        app:tabTextColor="@color/white"
-        app:tabIndicatorHeight="3dp"
-        >
+        android:text = "Public"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="45sp"
+        android:onClick="createPublicChat"
+        android:id="@+id/publicChatList">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text = "Public"
-            android:id="@+id/publicChatList">
+    </Button>
 
-        </com.google.android.material.tabs.TabItem>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="56dp"
+        android:text = "Private"
+        android:layout_marginRight="45sp"
+        android:onClick="createPrivateChat"
+        android:layout_toRightOf="@id/publicChatList"
+        android:id="@+id/privateChatList">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text = "Private"
-            android:id="@+id/privateChatList">
+    </Button>
 
-        </com.google.android.material.tabs.TabItem>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="56dp"
+        android:layout_toRightOf="@id/privateChatList"
+        android:onClick="createGeoChat"
+        android:text = "Geo"
+        android:id="@+id/geoChatList">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text = "Geo"
-            android:id="@+id/geoChatList">
+    </Button>
 
-        </com.google.android.material.tabs.TabItem>
-
-
-
-    </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout
         android:id="@+id/fragContainer"

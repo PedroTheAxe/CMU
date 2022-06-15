@@ -3,6 +3,7 @@ package pt.ulisboa.tecnico.cmov.conversationalcmu;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +32,13 @@ public class MainActivity extends AppCompatActivity {
 
         resultsTextView = (TextView) findViewById(R.id.results);
         displayData = (Button) findViewById(R.id.displayData);
+        Uri uri = getIntent().getData();
         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        if (uri != null) {
+            String[] splitUri = uri.toString().split("/");
+            i.putExtra("URI",splitUri[3]);
+            Log.e("URI",splitUri[3]);
+        }
         startActivity(i);
     }
 

@@ -5,13 +5,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pt.ulisboa.tecnico.cmov.conversationalcmu.LoginActivity"
+    tools:context="pt.ulisboa.tecnico.cmov.conversationalcmu.PublicCreationActivity"
     >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:text="ConversationalIST"
+        android:text="Create Public Chat"
         android:paddingVertical="35dp"
         android:textAlignment="center"
         android:textSize="50sp"
@@ -23,29 +23,13 @@
         android:layout_width="match_parent"
         android:layout_marginHorizontal="30dp"
         android:layout_height="wrap_content"
-        android:text="User name"
+        android:text="Chat name"
         />
     <EditText
-        android:id="@+id/userEditText"
+        android:id="@+id/publicChatNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="20dp"
-        android:layout_marginHorizontal="30dp"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginHorizontal="30dp"
-        android:layout_height="wrap_content"
-        android:text="Password"
-        />
-    <EditText
-        android:id="@+id/passwordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"
+        android:hint="Insert chatroom name"
         android:paddingHorizontal="12dp"
         android:paddingVertical="20dp"
         android:layout_marginHorizontal="30dp"
@@ -54,18 +38,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="create public chat"
         android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="20dp"
         android:background="@drawable/button_bg"
-        android:onClick="login"
+        android:onClick="createPublicChat"
         android:textColor="@color/white"
         />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="No Account yet? create One"
-        android:layout_marginHorizontal="30dp"
-        android:textAlignment="center"
-        />
+
 </LinearLayout>

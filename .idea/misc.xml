@@ -8,9 +8,11 @@
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/drawable/button_btn.xml" value="0.1985" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1515" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/drawable/round_button.xml" value="0.117" />
-        <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_chat_list.xml" value="0.1" />
+        <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_chat_list.xml" value="0.18085106382978725" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_login.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_main.xml" value="0.17857142857142858" />
+        <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_private_creation.xml" value="0.371875" />
+        <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_public_creation.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/chat_images.xml" value="0.75" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/chat_messages.xml" value="0.25" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/chat_resouce.xml" value="1.0" />
