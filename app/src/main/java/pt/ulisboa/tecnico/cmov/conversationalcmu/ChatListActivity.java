@@ -85,6 +85,12 @@ public class ChatListActivity extends AppCompatActivity {
         }).start();
     }
 
+    public void searchChat(View view) {
+        Intent intent = new Intent(getApplicationContext(), SearchChatActivity.class);
+        intent.putExtra("userName", getIntent().getExtras().getString("userName"));
+        startActivity(intent);
+    }
+
     public void createPublicChat(View view) {
         Intent intent = new Intent(getApplicationContext(), PublicCreationActivity.class);
         startActivity(intent);
@@ -96,6 +102,8 @@ public class ChatListActivity extends AppCompatActivity {
     }
 
     public void createGeoChat(View view) {
-
+        Intent intent = new Intent(getApplicationContext(), GeoCreationActivity.class);
+        intent.putExtra("userName", getIntent().getExtras().getString("userName"));
+        startActivity(intent);
     }
 }

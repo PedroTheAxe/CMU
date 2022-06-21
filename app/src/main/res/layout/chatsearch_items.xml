@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".SearchChatActivity">
 
     <TextView
         android:id="@+id/textViewUserName"
@@ -13,7 +14,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:text="TextView"
-        android:color="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:color="@color/black"
         android:text="TextView"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -21,21 +21,11 @@
                 android:id="@+id/TopID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Available Chatrooms"
+                android:text="Join Chatrooms"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:textStyle="bold"></TextView>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:onClick="searchChat"
-                android:text="Join chat"
-                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -44,48 +34,24 @@
                 android:textSize="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tap chat type to create new chat" />
+                android:text="Insert private chat link or click to join public/geo chat" />
+
 
 
         </RelativeLayout>
 
     </Toolbar>
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="56dp"
-        android:text = "Public"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="45sp"
-        android:onClick="createPublicChat"
-        android:id="@+id/publicChatList">
-
-    </Button>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="56dp"
-        android:text = "Private"
-        android:layout_marginRight="45sp"
-        android:onClick="createPrivateChat"
-        android:layout_toRightOf="@id/publicChatList"
-        android:id="@+id/privateChatList">
-
-    </Button>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="56dp"
-        android:layout_toRightOf="@id/privateChatList"
-        android:onClick="createGeoChat"
-        android:text = "Geo"
-        android:id="@+id/geoChatList">
-
-    </Button>
+    <EditText
+        android:id="@+id/searchNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50sp"
+        android:hint="Insert private chat link"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="20dp"
+        android:layout_marginHorizontal="30dp"
+        />
 
 
     <FrameLayout

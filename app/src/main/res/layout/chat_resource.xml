@@ -28,6 +28,15 @@
                 android:textSize="20dp"
                 android:textStyle="bold"></TextView>
 
+            <Button
+                android:id="@+id/leaveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="255sp"
+                android:onClick="leaveChat"
+                android:text="Leave chat" />
+
 
         </RelativeLayout>
 

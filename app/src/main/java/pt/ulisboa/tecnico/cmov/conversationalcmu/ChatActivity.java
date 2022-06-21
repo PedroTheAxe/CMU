@@ -192,6 +192,17 @@ public class ChatActivity extends AppCompatActivity {
         }).start();
     }
 
+    public void leaveChat(View view) {
+        new Thread(() -> {
+            try {
+                Response response = RequestHandler.buildLeaveChatsRequest(this.userName, this.chatRoomName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        super.onBackPressed();
+    }
+
     public void sendAttachment(View view) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         someActivityResultLauncher.launch(intent);

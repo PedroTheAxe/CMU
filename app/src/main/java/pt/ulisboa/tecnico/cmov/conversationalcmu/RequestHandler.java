@@ -61,6 +61,15 @@ public class RequestHandler {
         return response;
     }
 
+    public static Response createGeoFencedChatRequest(String chatRoomName, String chatRadius, String lat, String lon) throws IOException {
+        Request request = new Request.Builder()
+                .url(myUrl + "/creategeo?chatname=" + chatRoomName + "&chatradius=" + chatRadius + "&lat=" + lat + "&lon=" + lon)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        return response;
+    }
+
     public static Response joinWithInviteRequest(String chatRoomName, String inviteLink) throws IOException {
         Request request = new Request.Builder()
                 .url(myUrl + "/joinprivatechat?username=" + chatRoomName + "&invitelink=" + inviteLink)
@@ -73,6 +82,33 @@ public class RequestHandler {
     public static Response buildSendRequest(String chatRoom, String userName, String messageContent) throws IOException {
         Request request = new Request.Builder()
                 .url(myUrl + "/sendmessage?chatroom=" + chatRoom + "&username=" + userName + "&content=" + messageContent)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        return response;
+    }
+
+    public static Response buildJoinChatRequest(String chatRoom, String userName) throws IOException {
+        Request request = new Request.Builder()
+                .url(myUrl + "/joinchat?chatroom=" + chatRoom + "&username=" + userName)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        return response;
+    }
+
+    public static Response buildAvailableChatsRequest(String userName) throws IOException {
+        Request request = new Request.Builder()
+                .url(myUrl + "/joinablechats?username=" + userName)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        return response;
+    }
+
+    public static Response buildLeaveChatsRequest(String userName, String chatRoom) throws IOException {
+        Request request = new Request.Builder()
+                .url(myUrl + "/leavechat?chatroom=" + chatRoom + "&username=" + userName)
                 .build();
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);

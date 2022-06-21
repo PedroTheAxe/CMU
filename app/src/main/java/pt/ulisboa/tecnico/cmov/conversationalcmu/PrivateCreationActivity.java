@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -30,11 +31,10 @@ public class PrivateCreationActivity extends AppCompatActivity {
         String inviteLinkString = getInviteLinkString();
         new Thread(() -> {
             try {
-                String[] inviteLinkParameters = inviteLinkString.split("/");
-                Response response = RequestHandler.createPrivateChatRequest(chatName.getText().toString(), inviteLinkParameters[3]);
+                Response response = RequestHandler.createPrivateChatRequest(chatName.getText().toString(), inviteLinkString);
                 myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
-                myClip = ClipData.newPlainText("URI", inviteLinkString);
+                myClip = ClipData.newPlainText("URI", "http://www.conversationalist.com/" + inviteLinkString);
                 myClipboard.setPrimaryClip(myClip);
             } catch (IOException e) {
                 e.printStackTrace();
