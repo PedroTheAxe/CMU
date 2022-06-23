@@ -5,7 +5,10 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -77,12 +80,37 @@ public class ChatListActivity extends AppCompatActivity {
                 JSONArray jsonArray = new JSONArray(response.body().string());
                 for ( int i = 0; i < jsonArray.length(); i++) {
                     JSONObject entry = jsonArray.getJSONObject(i);
-                    chatroomsList.add(entry);
+                    if (entry.getString("chatType").equals("Geo-Fenced")) {
+                        if (checkIfInGeoFence(entry)) {
+                            chatroomsList.add(entry);
+                        } else {
+                            continue;
+                        }
+                    } else {
+                        chatroomsList.add(entry);
+                    }
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+    private boolean checkIfInGeoFence(JSONObject entry) throws JSONException {
+        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
+        Location locationB = new Location("Chat center");
+        locationB.setLatitude(Double.parseDouble(entry.getString("chatLat")));
+        locationB.setLongitude(Double.parseDouble(entry.getString("chatLon")));
+        Log.e("fixe", String.valueOf(location.distanceTo(locationB)));
+        Log.e("fixe", String.valueOf((Double.parseDouble(entry.getString("chatRadius")) * 1000)));
+        if ((Double.parseDouble(entry.getString("chatRadius")) * 1000) >= location.distanceTo(locationB)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void searchChat(View view) {

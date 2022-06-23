@@ -57,6 +57,9 @@ public class ChatActivity extends AppCompatActivity {
     private String messageContent;
     private WebSocketClient webSocketClient;
     private ChatMessagesRecyclerAdapter adapter;
+    private LinearLayoutManager layoutManager;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+    boolean loading = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,24 @@ public class ChatActivity extends AppCompatActivity {
         submitMessage.setFocusableInTouchMode(true);
         submitMessage.requestFocus();
         createWebSocketClient();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    Log.e("test","reached the last element of recyclerview");
+                    visibleItemCount = layoutManager.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+                    Log.e("TAGTAG",String.valueOf(totalItemCount));
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            loading = false;
+                            fetchData(totalItemCount);
+                        }
+                    }
+                }
+            }
+        });
         submitMessage.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
@@ -92,6 +113,43 @@ public class ChatActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    public void fetchData(int totalItems) {
+
+        new Thread(() -> {
+            try {
+                Response response = RequestHandler.fetchChatMessagesRequest(chatRoomName, totalItems);
+                JSONArray jsonArray = new JSONArray(response.body().string());
+                for ( int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject entry = jsonArray.getJSONObject(i);
+                    chatMessageList.add(entry);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+    }
+
+    public void callForImageRequest(String s) {
+        String[] params = s.split("/");
+        new Thread(() -> {
+            try {
+                Response response = RequestHandler.buildImageMessageRequest(params[1]);
+                JSONObject entry = new JSONObject(response.body().string());
+                chatMessageList.add(entry);
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void createWebSocketClient() {
@@ -114,14 +172,22 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onTextReceived(String s) {
                 Log.e("Recebido", s);
+                if (s.contains("imgfileidreq")) {
+                    callForImageRequest(s);
+                }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         try{
-                            JSONArray jsonArray = new JSONArray(s);
-                            for ( int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject entry = jsonArray.getJSONObject(i);
-                                chatMessageList.add(entry);
+                            if (s.contains("imgfileidreq")) {
+
+                            } else {
+                                JSONArray jsonArray = new JSONArray(s);
+                                for ( int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject entry = jsonArray.getJSONObject(i);
+                                    Log.e("TAGENTRY",entry.toString());
+                                    chatMessageList.add(entry);
+                                }
                             }
                             adapter.notifyItemInserted(chatMessageList.size());
                         } catch (Exception e){
@@ -162,7 +228,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void setAdapter() {
         adapter = new ChatMessagesRecyclerAdapter(chatMessageList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
@@ -213,12 +279,24 @@ public class ChatActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() { //ver content type ou por tudo em cima uns dos outros e popular apenas de acordo com os fields
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    setContentView(R.layout.chat_images);
-                    ImageView imageView = (ImageView) findViewById(R.id.imagePicture);
+                    //setContentView(R.layout.chat_images);
+                    //ImageView imageView = (ImageView) findViewById(R.id.imagePicture);
+                    //Log.e("tag", String.valueOf(result.getResultCode()));
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        Uri uri = data.getData(); //local password stored in phone guest account -- on bind chama o item e fico a ver
-                        imageView.setImageURI(uri); //avisar opr websocket de imagem e ir buscar atraves de rest
+                        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                        final int COMPRESSION_QUALITY = 0;
+                        String encodedImage;
+                        ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
+                                byteArrayBitmapStream);
+                        byte[] b = byteArrayBitmapStream.toByteArray();
+                        encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+                        //Log.e("tagtag",encodedImage);
+                        //Log.e("ootaooa",webSocketClient.toString());
+                        webSocketClient.send("image/" + chatRoomName + "/" + userName + "/" + encodedImage);
+                        //Uri uri = data.getData(); //null in cam local password stored in phone guest account -- on bind chama o item e fico a ver
+                        //imageView.setImageBitmap(bitmap); //avisar opr websocket de imagem e ir buscar atraves de rest
                     }
                 }
             });

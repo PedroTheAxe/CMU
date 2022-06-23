@@ -14,6 +14,9 @@ public class RequestHandler {
     private static final String myUrl = "http://192.168.1.80:8080";
     private static final OkHttpClient client = new OkHttpClient();
 
+    public RequestHandler() {
+    }
+
     public static Response buildLoginRequest(EditText user, EditText pass) throws IOException{
         Request request = new Request.Builder()
                 .url(myUrl + "/login?user=" + user.getText().toString() + "&pass=" + pass.getText().toString())
@@ -35,6 +38,15 @@ public class RequestHandler {
     public static Response buildChatMessagesRequest(String chatRoomName) throws IOException {
         Request request = new Request.Builder()
                 .url(myUrl + "/chatrooms?chatroomname=" + chatRoomName)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        return response;
+    }
+
+    public static Response fetchChatMessagesRequest(String chatRoomName, int totalCount) throws IOException {
+        Request request = new Request.Builder()
+                .url(myUrl + "/fetchmessages?chatroomname=" + chatRoomName + "&from=" + String.valueOf(totalCount))
                 .build();
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
@@ -91,6 +103,15 @@ public class RequestHandler {
     public static Response buildJoinChatRequest(String chatRoom, String userName) throws IOException {
         Request request = new Request.Builder()
                 .url(myUrl + "/joinchat?chatroom=" + chatRoom + "&username=" + userName)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        return response;
+    }
+
+    public static Response buildImageMessageRequest(String messageId) throws IOException {
+        Request request = new Request.Builder()
+                .url(myUrl + "/getimage?id=" + messageId)
                 .build();
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);

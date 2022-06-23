@@ -10,18 +10,18 @@
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/drawable/round_button.xml" value="0.117" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_chat_list.xml" value="0.5" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_geo_creation.xml" value="0.22" />
-        <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_geo_fenced_creation.xml" value="0.33" />
+        <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_geo_fenced_creation.xml" value="0.24719101123595505" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_login.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_main.xml" value="0.17857142857142858" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_private_creation.xml" value="0.371875" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_public_creation.xml" value="0.296195652173913" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/activity_search_chat.xml" value="0.25" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/chat_images.xml" value="0.75" />
-        <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/chat_messages.xml" value="0.25" />
+        <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/chat_messages.xml" value="0.5" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/chat_resouce.xml" value="1.0" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/chat_resource.xml" value="0.25359712230215825" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/chatlist_items.xml" value="0.67" />
-        <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/chatsearch_items.xml" value="0.11550151975683891" />
+        <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/chatsearch_items.xml" value="0.33" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/fragment_geo.xml" value="0.5" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/fragment_private.xml" value="0.33" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/ConversationalCMU/app/src/main/res/layout/fragment_public.xml" value="0.2504528985507246" />
