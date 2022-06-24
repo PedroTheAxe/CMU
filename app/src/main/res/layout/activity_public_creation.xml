@@ -1,49 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="pt.ulisboa.tecnico.cmov.conversationalcmu.PublicCreationActivity"
-    >
 
-    <TextView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:text="Create Public Chat"
-        android:paddingVertical="35dp"
-        android:textAlignment="center"
-        android:textSize="50sp"
-        android:fontFamily="cursive"
-        android:textColor="@color/black"
-        android:layout_marginBottom="25dp"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginHorizontal="30dp"
-        android:layout_height="wrap_content"
-        android:text="Chat name"
-        />
-    <EditText
-        android:id="@+id/publicChatNameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Insert chatroom name"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="20dp"
-        android:layout_marginHorizontal="30dp"
-        />
+        android:layout_height="match_parent"
+        tools:context="pt.ulisboa.tecnico.cmov.conversationalcmu.PublicCreationActivity"
+        >
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="create public chat"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="20dp"
-        android:background="@drawable/button_bg"
-        android:onClick="createPublicChat"
-        android:textColor="@color/white"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:text="Create Public Chat"
+            android:paddingVertical="35dp"
+            android:textAlignment="center"
+            android:textSize="50sp"
+            android:fontFamily="cursive"
+            android:textColor="@color/black"
+            android:layout_marginBottom="25dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="30dp"
+            android:layout_height="wrap_content"
+            android:text="Chat name"
+            />
+        <EditText
+            android:id="@+id/publicChatNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Insert chatroom name"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="20dp"
+            android:layout_marginHorizontal="30dp"
+            />
 
-</LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="create public chat"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/button_bg"
+            android:onClick="createPublicChat"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+</ScrollView>

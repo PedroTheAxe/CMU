@@ -58,7 +58,7 @@ public class ChatActivity extends AppCompatActivity {
     private WebSocketClient webSocketClient;
     private ChatMessagesRecyclerAdapter adapter;
     private LinearLayoutManager layoutManager;
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
+    int totalItemCount;
     boolean loading = true;
 
     @Override
@@ -86,9 +86,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
                     Log.e("test","reached the last element of recyclerview");
-                    visibleItemCount = layoutManager.getChildCount();
                     totalItemCount = layoutManager.getItemCount();
-                    pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
                     Log.e("TAGTAG",String.valueOf(totalItemCount));
                     if (!recyclerView.canScrollVertically(1)) {
                         fetchData(totalItemCount);

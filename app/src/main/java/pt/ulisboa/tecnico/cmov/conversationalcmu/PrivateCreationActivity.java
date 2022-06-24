@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,13 @@ public class PrivateCreationActivity extends AppCompatActivity {
 
                 myClip = ClipData.newPlainText("URI", "http://www.conversationalist.com/" + inviteLinkString);
                 myClipboard.setPrimaryClip(myClip);
+                Intent socialIntent = new Intent();
+                socialIntent.setAction(Intent.ACTION_SEND);
+                socialIntent.putExtra(Intent.EXTRA_TEXT, "http://www.conversationalist.com/" + inviteLinkString);
+                socialIntent.setType("text/plain");
+
+                Intent shareSocialIntent = Intent.createChooser(socialIntent, null);
+                startActivity(shareSocialIntent);
             } catch (IOException e) {
                 e.printStackTrace();
             }
