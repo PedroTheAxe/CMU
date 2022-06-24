@@ -97,8 +97,6 @@ public class GeoFencedCreationActivity extends AppCompatActivity implements OnMa
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Set up the views
-
         // Initialize the Places client
         String apiKey = getString(R.string.google_maps_api_key);
         Places.initialize(getApplicationContext(), apiKey);

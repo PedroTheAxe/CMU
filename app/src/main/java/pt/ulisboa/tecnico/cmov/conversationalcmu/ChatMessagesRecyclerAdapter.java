@@ -20,13 +20,14 @@ import java.util.ArrayList;
 
 public class ChatMessagesRecyclerAdapter extends RecyclerView.Adapter<ChatMessagesRecyclerAdapter.MyViewHolder> {
     private ArrayList<JSONObject> chatMessageList;
+    private RecyclerViewClickListener listener;
 
-    public ChatMessagesRecyclerAdapter(ArrayList<JSONObject> chatList)  {
+    public ChatMessagesRecyclerAdapter(ArrayList<JSONObject> chatList, RecyclerViewClickListener listener)  {
         this.chatMessageList = chatList;
-
+        this.listener = listener;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView chatUserText;
         private TextView chatMessageText;
         private TextView chatTimestampText;
@@ -38,6 +39,16 @@ public class ChatMessagesRecyclerAdapter extends RecyclerView.Adapter<ChatMessag
             chatMessageText = view.findViewById(R.id.textViewChatMessage);
             chatTimestampText = view.findViewById(R.id.textViewChatTimestamp);
             chatImage = view.findViewById(R.id.imagePicture);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            try {
+                listener.onClick(v, getAdapterPosition());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -86,6 +97,10 @@ public class ChatMessagesRecyclerAdapter extends RecyclerView.Adapter<ChatMessag
     @Override
     public int getItemCount() {
         return chatMessageList.size();
+    }
+
+    public interface RecyclerViewClickListener{
+        void onClick(View v, int position) throws JSONException;
     }
 
 }

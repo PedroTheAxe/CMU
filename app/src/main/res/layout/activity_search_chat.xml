@@ -34,7 +34,7 @@
                 android:textSize="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Insert private chat link or click to join public/geo chat" />
+                android:text="Search by chat name" />
 
 
 
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50sp"
-        android:hint="Insert private chat link"
+        android:hint="Chat name"
         android:paddingHorizontal="12dp"
         android:paddingVertical="20dp"
         android:layout_marginHorizontal="30dp"

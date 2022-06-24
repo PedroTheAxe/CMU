@@ -23,7 +23,6 @@
         android:theme="@style/Theme.ConversationalCMU"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -37,13 +36,13 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="${MAPS_API_KEY}" />
 
         <activity
             android:name=".GeoFencedCreationActivity"
             android:exported="false"
-            android:theme="@style/Theme.Map"
-            android:label="@string/title_activity_geo_fenced_creation" />
+            android:label="@string/title_activity_geo_fenced_creation"
+            android:theme="@style/Theme.Map" />
         <activity
             android:name=".GeoCreationActivity"
             android:exported="false" />

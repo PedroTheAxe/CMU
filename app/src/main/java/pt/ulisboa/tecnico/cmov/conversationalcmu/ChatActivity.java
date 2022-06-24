@@ -58,8 +58,8 @@ public class ChatActivity extends AppCompatActivity {
     private WebSocketClient webSocketClient;
     private ChatMessagesRecyclerAdapter adapter;
     private LinearLayoutManager layoutManager;
+    private ChatMessagesRecyclerAdapter.RecyclerViewClickListener listener;
     int totalItemCount;
-    boolean loading = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,11 +223,24 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        adapter = new ChatMessagesRecyclerAdapter(chatMessageList);
+        setOnClickListener();
+        adapter = new ChatMessagesRecyclerAdapter(chatMessageList, listener);
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+    }
+
+    private void setOnClickListener() {
+        listener = (v, position) -> {
+            Intent socialIntent = new Intent();
+            socialIntent.setAction(Intent.ACTION_SEND);
+            socialIntent.putExtra(Intent.EXTRA_TEXT, chatMessageList.get(position).getString("chatMessageContent"));
+            socialIntent.setType("text/plain");
+
+            Intent shareSocialIntent = Intent.createChooser(socialIntent, null);
+            startActivity(shareSocialIntent);
+        };
     }
 
     private void sendChatMessage() {
