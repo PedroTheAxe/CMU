@@ -3,11 +3,13 @@ package pt.ulisboa.tecnico.cmov.conversationalcmu;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -22,45 +24,51 @@ public class MainActivity extends AppCompatActivity {
 
     String myUrl = "http://192.168.1.80:8080";
     private final OkHttpClient client = new OkHttpClient();
-    TextView resultsTextView;
-    Button displayData;
+    SharedPreferences shp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        resultsTextView = (TextView) findViewById(R.id.results);
-        displayData = (Button) findViewById(R.id.displayData);
+        shp = getSharedPreferences("myPreferences", MODE_PRIVATE);
         Uri uri = getIntent().getData();
-        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-        if (uri != null) {
-            String[] splitUri = uri.toString().split("/");
-            i.putExtra("URI",splitUri[3]);
-            Log.e("URI",splitUri[3]);
-        }
-        startActivity(i);
-    }
 
-    public void iftest(View view) throws Exception {
+
         new Thread(() -> {
-            Request request = new Request.Builder()
-                    .url(myUrl + "/users")
-                    .build();
-
-            try (Response response = client.newCall(request).execute()) {
-                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-                Headers responseHeaders = response.headers();
-                for (int i = 0; i < responseHeaders.size(); i++) {
-                    Log.d("headers",responseHeaders.name(i) + ": " + responseHeaders.value(i));
+            try {
+                String user = shp.getString("user","");
+                String pass = shp.getString("pass","");
+                String[] splitUri = null;
+                Response response = RequestHandler.buildLoginRequest(user, pass);
+                String responsePlaceholder = response.body().string();
+                if (responsePlaceholder.equals("Incorrect password") || responsePlaceholder.equals("No such user, register new account"))  {
+                    Log.e("TAGTAG","ESTOU AQUI");
+                    Intent e = new Intent(getApplicationContext(), LoginActivity.class);
+                    if (uri != null) {
+                        splitUri = uri.toString().split("/");
+                        e.putExtra("URI",splitUri[3]);
+                        Log.e("URI",splitUri[3]);
+                    }
+                    startActivity(e);
+                    return;
                 }
-
-                Log.d("body",response.body().string());
+                Intent i = new Intent(getApplicationContext(), ChatListActivity.class);
+                Bundle extras = getIntent().getExtras();
+                String invite = null;
+                if (uri != null) {
+                    splitUri = uri.toString().split("/");
+                    Log.e("URI",splitUri[3]);
+                    Response response2 = RequestHandler.joinWithInviteRequest(user, splitUri[3]);
+                }
+                i.putExtra("userName", user);
+                startActivity(i);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }).start();
+
+
+
     }
 
 }

@@ -17,6 +17,10 @@ public class ChatMessage {
     private String chatMessageTimestamp;
     @Column(name = "chatMessageContent")
     private String chatMessageContent;
+    @Column(name = "chatImageBitmap", length = 99999)
+    private String chatImageBitmap;
+    @Column(name = "chatMessageType")
+    private String chatMessageType;
 
     public ChatMessage() {
 
@@ -27,6 +31,14 @@ public class ChatMessage {
         this.chatMessageSender = chatMessageSender;
         this.chatMessageTimestamp = chatMessageTimestamp;
         this.chatMessageContent = chatMessageContent;
+    }
+
+    public ChatMessage(String chatMessageChatRoom, String chatMessageSender, String chatMessageTimestamp, String chatMessageType, String chatImageBitmap) {
+        this.chatMessageChatRoom = chatMessageChatRoom;
+        this.chatMessageSender = chatMessageSender;
+        this.chatMessageTimestamp = chatMessageTimestamp;
+        this.chatImageBitmap = chatImageBitmap;
+        this.chatMessageType = chatMessageType;
     }
 
     public String getChatMessageSender() {
@@ -59,6 +71,18 @@ public class ChatMessage {
 
     public void setChatMessageChatRoom(String chatMessageChatRoom) {
         this.chatMessageChatRoom = chatMessageChatRoom;
+    }
+
+    public String getChatImageBitmap() {
+        return chatImageBitmap;
+    }
+
+    public String getChatMessageType() {
+        return chatMessageType;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
 

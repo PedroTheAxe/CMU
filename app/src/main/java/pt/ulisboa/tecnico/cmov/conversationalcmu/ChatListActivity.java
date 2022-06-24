@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -94,6 +95,15 @@ public class ChatListActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+    public void logout(View view) {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", MODE_PRIVATE);
+        preferences.edit().remove("user").commit();
+        preferences.edit().remove("pass").commit();
+        startActivity(intent);
     }
 
     private boolean checkIfInGeoFence(JSONObject entry) throws JSONException {

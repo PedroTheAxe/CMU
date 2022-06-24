@@ -7,16 +7,17 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class WebSocketHandler extends AbstractWebSocketHandler {
 
     private static List<WebSocketSession> clientSessions = new ArrayList<>();
+    //private static HashMap<String,List<String>> openClientChats = new HashMap<>();
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws IOException {
         session.setTextMessageSizeLimit(999999);
         session.setBinaryMessageSizeLimit(999999);
-        System.out.println("estou aqui");
         if (!clientSessions.contains(session)) {
             clientSessions.add(session);
         }
@@ -25,23 +26,26 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
             return;
         }
         String[] msg = String.valueOf(message.getPayload()).split("/");
-        String[] imageSplit = String.valueOf(message.getPayload()).split("/",3);
-        if (imageSplit[0].equals("imagem")) {
-            String imageData = imageSplit[2];
-            System.out.println("RECEBI UMA IMAGEM");
-            String timestamp = new SimpleDateFormat("dd/MM HH:mm").format(Calendar.getInstance().getTime());
-            String jsonString = "[{\"chatMessageSender\":" + "\"" + imageSplit[1] + "\"" + ", \"chatMessageContent\":" + "\"" + imageData + "\"" + ", \"chatMessageTimestamp\":" + "\"" + timestamp + "\"" + "}]";
-            System.out.println(jsonString);
+        if (msg[0].equals("Session start")) {
+            return;
+        }
+        String[] imageSplit = String.valueOf(message.getPayload()).split("/",4);
+        if (imageSplit[0].equals("image")) {
+            System.out.println("I am here");
+            String imageData = imageSplit[3];
+            String chatId = ChatMessageController.registerWebSocketMessage(msg[1],msg[2],null,"image",imageData);
+
             for (WebSocketSession ses: clientSessions) {
-                ses.sendMessage(new TextMessage(jsonString));
+                try {
+                    System.out.println("This is my id" + chatId);
+                    ses.sendMessage(new TextMessage("imgfileidreq/"+chatId));
+                } catch (Exception e) {
+                    ses.close();
+                }
             }
             return;
         }
-        if (msg.length < 3) {
-            System.out.println("Type 2");
-            return;
-        }
-        String timestamp = ChatMessageController.registerWebSocketMessage(msg[0],msg[1],msg[2]);
+        String timestamp = ChatMessageController.registerWebSocketMessage(msg[0],msg[1],msg[2],null,null);
         String jsonString = "[{\"chatMessageSender\":" + "\"" + msg[1] + "\"" + ", \"chatMessageContent\":" + "\"" + msg[2] + "\"" + ", \"chatMessageTimestamp\":" + "\"" + timestamp + "\"" + "}]";
         System.out.println(jsonString);
         for (WebSocketSession ses: clientSessions) {

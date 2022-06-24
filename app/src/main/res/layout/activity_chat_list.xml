@@ -37,6 +37,16 @@
                 android:text="Join chat"
                 android:textStyle="bold" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:onClick="searchChat"
+                android:text="Join chat"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/textView3"
                 android:layout_below="@+id/TopID"
@@ -44,7 +54,8 @@
                 android:textSize="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tap chat type to create new chat" />
+                android:onClick="logout"
+                android:text="Tap to logout" />
 
 
         </RelativeLayout>
@@ -100,4 +111,5 @@
             android:layout_below="@id/toolbar">
         </androidx.recyclerview.widget.RecyclerView>
     </FrameLayout>
+
 </RelativeLayout>

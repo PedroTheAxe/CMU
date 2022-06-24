@@ -17,9 +17,18 @@ public class RequestHandler {
     public RequestHandler() {
     }
 
-    public static Response buildLoginRequest(EditText user, EditText pass) throws IOException{
+    public static Response buildLoginRequest(String user, String pass) throws IOException{
         Request request = new Request.Builder()
-                .url(myUrl + "/login?user=" + user.getText().toString() + "&pass=" + pass.getText().toString())
+                .url(myUrl + "/login?user=" + user + "&pass=" + pass)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        return response;
+    }
+
+    public static Response buildRegisterRequest(String user, String pass) throws IOException{
+        Request request = new Request.Builder()
+                .url(myUrl + "/register?user=" + user + "&pass=" + pass)
                 .build();
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);

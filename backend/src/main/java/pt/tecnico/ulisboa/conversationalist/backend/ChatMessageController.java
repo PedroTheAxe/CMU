@@ -19,8 +19,26 @@ public class ChatMessageController {
 
     @GetMapping("/chatrooms")
     public List<ChatMessage> getChatMessages(@RequestParam(value = "chatroomname") String chatroomname) {
+        List<ChatMessage> messagesFromChat = repository.findMessagesByChatRoomName(chatroomname);
+        if (messagesFromChat.size() < 8) {
+            return repository.findMessagesByChatRoomName(chatroomname).subList(0,messagesFromChat.size());
+        } else {
+            return repository.findMessagesByChatRoomName(chatroomname).subList(0,8);
+        }
+    }
 
-        return repository.findMessagesByChatRoomName(chatroomname);
+    @GetMapping("/fetchmessages")
+    public List<ChatMessage> fetchChatMessages(@RequestParam(value = "chatroomname") String chatroomname, @RequestParam(value = "from") String totalCount) {
+        List<ChatMessage> chatMsgQueue = repository.findMessagesByChatRoomName(chatroomname);
+        System.out.println("FETCH DE MENSAGNES NOVAS" + totalCount);
+        int queueSize = chatMsgQueue.size();
+        System.out.println("queue size" + String.valueOf(queueSize));
+        if (queueSize > Integer.valueOf(totalCount)+3) {
+            return repository.findOrderedMessagesByChatRoomName(chatroomname).subList(Integer.valueOf(totalCount),Integer.valueOf(totalCount)+3);
+        } else {
+            return repository.findOrderedMessagesByChatRoomName(chatroomname).subList(Integer.valueOf(totalCount),Integer.valueOf(totalCount)+(queueSize-Integer.valueOf(totalCount)));
+        }
+
     }
 
     @GetMapping("/sendmessage")
@@ -30,8 +48,21 @@ public class ChatMessageController {
         repository.save(chatMessage);
     }
 
-    public static String registerWebSocketMessage(String chatRoom, String userName, String content) {
+    @GetMapping("/getimage")
+    public ChatMessage getImageFromId(@RequestParam(value="id") String messageId) {
+        return repository.findMessageById(Long.parseLong(messageId));
+
+    }
+
+    public static String registerWebSocketMessage(String chatRoom, String userName, String content, String chatType, String chatBitmap) {
         String timeStamp = new SimpleDateFormat("dd/MM HH:mm").format(Calendar.getInstance().getTime());
+        if (chatType != null) {
+            System.out.println(chatBitmap);
+            ChatMessage chatImage = new ChatMessage(chatRoom, userName, timeStamp, chatType, chatBitmap);
+            System.out.println(chatImage.getChatMessageType());
+            repository.save(chatImage);
+            return String.valueOf(chatImage.getId());
+        }
         ChatMessage chatMessage = new ChatMessage(chatRoom, userName, timeStamp, content);
         repository.save(chatMessage);
         return timeStamp;

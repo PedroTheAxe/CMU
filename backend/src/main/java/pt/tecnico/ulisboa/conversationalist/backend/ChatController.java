@@ -15,11 +15,9 @@ public class ChatController {
     ChatController(ChatRepository repository) {
         this.repository = repository;
         Chat newChat1 = new Chat("Teste1", Chat.ChatType.PUB.toString());
-        Chat newChat2 = new Chat("Teste2",Chat.ChatType.GEO.toString());
         Chat newChat3 = new Chat("Teste3",Chat.ChatType.PRI.toString());
         newChat3.setInviteLink("7YAD3SF");
         repository.save(newChat1);
-        repository.save(newChat2);
         repository.save(newChat3);
     }
     @GetMapping(value = "/chats")
@@ -52,6 +50,57 @@ public class ChatController {
             toAddChat = new Chat(chatname, Chat.ChatType.PRI.toString());
             toAddChat.setInviteLink(inviteLink);
         }
+        repository.save(toAddChat);
+    }
+
+    @GetMapping(value = "/joinablechats")
+    public List<Chat> getJoinableChats(@RequestParam(value = "username") String userName) {
+        //Get user and chats
+        System.out.println(userName);
+        UserRepository userrepo = UserController.getRepository();
+        User user = userrepo.findUserByUserName(userName);
+        System.out.println(user);
+        List<String> alreadyJoined = user.getAvailableChats();
+        List<Chat> chatlist = ChatController.getRepository().getChat();
+        //Ready up joinable chats to send over
+        List<Chat> joinableChats = new ArrayList<>();
+
+        for (Chat chats: chatlist) {
+            if (chats.getChatType().equals(Chat.ChatType.PUB.toString()) || chats.getChatType().equals(Chat.ChatType.GEO.toString())) {
+                if (!alreadyJoined.contains(chats.getChatName())) {
+                    joinableChats.add(chats); //Join public chats
+                }
+            }
+        }
+
+        return joinableChats;
+    }
+
+    @GetMapping(value = "/joinchat")
+    public void joinChat(@RequestParam(value = "chatroom") String chatName, @RequestParam(value = "username") String userName) {
+        UserRepository userrepo = UserController.getRepository();
+        User user = userrepo.findUserByUserName(userName);
+        user.addAvailableChats(chatName);
+        userrepo.save(user);
+    }
+
+    @GetMapping(value = "/leavechat")
+    public void leaveChat(@RequestParam(value = "chatroom") String chatName, @RequestParam(value = "username") String userName) {
+        UserRepository userrepo = UserController.getRepository();
+        User user = userrepo.findUserByUserName(userName);
+        System.out.println(user);
+        System.out.println("fixe" + chatName + userName);
+        user.removeAvailableChats(chatName);
+        userrepo.save(user);
+    }
+
+    @GetMapping(value = "/creategeo")
+    public void createGeoFencedChat(@RequestParam(value = "chatname") String chatName, @RequestParam(value = "chatradius") String chatRadius, @RequestParam(value = "lat") String chatLat, @RequestParam(value = "lon") String chatLon) {
+        Chat toAddChat = null;
+        toAddChat = new Chat(chatName, Chat.ChatType.GEO.toString());
+        toAddChat.setChatRadius(chatRadius);
+        toAddChat.setChatLat(chatLat);
+        toAddChat.setChatLon(chatLon);
         repository.save(toAddChat);
     }
 

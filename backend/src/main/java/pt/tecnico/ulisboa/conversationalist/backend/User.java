@@ -52,4 +52,6 @@ public class User {
     public void addAvailableChats(String availableChats) {
         this.availableChats.add(availableChats);
     }
+
+    public void removeAvailableChats(String availableChats) { this.availableChats.remove(availableChats); }
 }

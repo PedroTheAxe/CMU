@@ -16,6 +16,12 @@ public class Chat {
     private String chatType;
     @Column(name = "invitelink")
     private String inviteLink;
+    @Column(name = "radius")
+    private String chatRadius;
+    @Column(name = "lat")
+    private String chatLat;
+    @Column(name = "lon")
+    private String chatLon;
     public Chat() {
 
     }
@@ -49,6 +55,30 @@ public class Chat {
 
     public void setInviteLink(String inviteLink) {
         this.inviteLink = inviteLink;
+    }
+
+    public String getChatRadius() {
+        return chatRadius;
+    }
+
+    public String getChatLat() {
+        return chatLat;
+    }
+
+    public String getChatLon() {
+        return chatLon;
+    }
+
+    public void setChatRadius(String chatRadius) {
+        this.chatRadius = chatRadius;
+    }
+
+    public void setChatLat(String chatLat) {
+        this.chatLat = chatLat;
+    }
+
+    public void setChatLon(String chatLon) {
+        this.chatLon = chatLon;
     }
 
     public enum ChatType {

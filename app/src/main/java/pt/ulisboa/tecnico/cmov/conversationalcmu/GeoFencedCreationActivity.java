@@ -134,7 +134,8 @@ public class GeoFencedCreationActivity extends AppCompatActivity implements OnMa
                 Log.d("lat-long", "" + lat + "......." + lon);
                 LatLng user = new LatLng(lat, lon);
                 /*used marker for show the location */
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(user));
+                mMap.moveCamera(CameraUpdateFactory
+                        .newLatLngZoom(user, DEFAULT_ZOOM));
             }
         }
         catch (IOException e)

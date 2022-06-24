@@ -6,21 +6,5 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/results"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test box"
-        tools:layout_editor_absoluteX="175dp"
-        tools:layout_editor_absoluteY="284dp" />
-
-    <Button
-        android:id="@+id/displayData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Click to test"
-        android:onClick="iftest"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="90dp" />
 
 </LinearLayout>

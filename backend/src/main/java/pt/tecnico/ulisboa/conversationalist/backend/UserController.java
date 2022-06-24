@@ -21,6 +21,13 @@ public class UserController {
         return "users";
     }
 
+    @GetMapping("/register")
+    public void registerUser(@RequestParam(value = "user") String user, @RequestParam(value = "pass") String pass) {
+        User newUser = new User(user,pass);
+        this.repository.save(newUser);
+        return;
+    }
+
     @GetMapping("/login")
     public String loginUser(@RequestParam(value = "user") String user, @RequestParam(value = "pass") String pass) {
 
@@ -29,19 +36,15 @@ public class UserController {
         for (User username: userList) {
             if (username.getUsername().equals(user)) {
                 if (username.getPassword().equals(pass)) {
+                    System.out.println("Logged in");
                     return "Successfully logged in user";
                 }
+                System.out.println("Incorrect password");
                 return "Incorrect password";
             }
         }
-        User newUser = new User(user,pass);
-        this.repository.save(newUser);
-        System.out.println("AHHAUHAFSFDShihi" + newUser.getUsername());
 
-        System.out.println("AHHAUHAFSFDSyooo" + newUser.getUsername());
-        User test = this.repository.findUserByUserName(user);
-        System.out.println("fixe" + test.getUsername());
-        return "No such user, registered new account";
+        return "No such user, register new account";
     }
 
     @GetMapping("/joinprivatechat")

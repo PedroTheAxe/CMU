@@ -90,11 +90,8 @@ public class ChatActivity extends AppCompatActivity {
                     totalItemCount = layoutManager.getItemCount();
                     pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
                     Log.e("TAGTAG",String.valueOf(totalItemCount));
-                    if (loading) {
-                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            loading = false;
-                            fetchData(totalItemCount);
-                        }
+                    if (!recyclerView.canScrollVertically(1)) {
+                        fetchData(totalItemCount);
                     }
                 }
             }
@@ -123,6 +120,7 @@ public class ChatActivity extends AppCompatActivity {
                 JSONArray jsonArray = new JSONArray(response.body().string());
                 for ( int i = 0; i < jsonArray.length(); i++) {
                     JSONObject entry = jsonArray.getJSONObject(i);
+                    Log.e("LENGTH",String.valueOf(jsonArray.length()));
                     chatMessageList.add(entry);
                     runOnUiThread(new Runnable() {
                         @Override
