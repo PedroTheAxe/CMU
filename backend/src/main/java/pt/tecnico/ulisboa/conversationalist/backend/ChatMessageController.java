@@ -30,9 +30,7 @@ public class ChatMessageController {
     @GetMapping("/fetchmessages")
     public List<ChatMessage> fetchChatMessages(@RequestParam(value = "chatroomname") String chatroomname, @RequestParam(value = "from") String totalCount) {
         List<ChatMessage> chatMsgQueue = repository.findMessagesByChatRoomName(chatroomname);
-        System.out.println("FETCH DE MENSAGNES NOVAS" + totalCount);
         int queueSize = chatMsgQueue.size();
-        System.out.println("queue size" + String.valueOf(queueSize));
         if (queueSize > Integer.valueOf(totalCount)+3) {
             return repository.findOrderedMessagesByChatRoomName(chatroomname).subList(Integer.valueOf(totalCount),Integer.valueOf(totalCount)+3);
         } else {

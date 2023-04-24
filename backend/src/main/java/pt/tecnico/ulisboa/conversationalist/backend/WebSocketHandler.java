@@ -21,7 +21,6 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
         if (!clientSessions.contains(session)) {
             clientSessions.add(session);
         }
-        System.out.println(message.getPayload());
         if (message.getPayload().equals("Session start")) {
             return;
         }
@@ -31,13 +30,11 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
         }
         String[] imageSplit = String.valueOf(message.getPayload()).split("/",4);
         if (imageSplit[0].equals("image")) {
-            System.out.println("I am here");
             String imageData = imageSplit[3];
             String chatId = ChatMessageController.registerWebSocketMessage(msg[1],msg[2],null,"image",imageData);
 
             for (WebSocketSession ses: clientSessions) {
                 try {
-                    System.out.println("This is my id" + chatId);
                     ses.sendMessage(new TextMessage("imgfileidreq/"+chatId));
                 } catch (Exception e) {
                     ses.close();
@@ -47,7 +44,6 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
         }
         String timestamp = ChatMessageController.registerWebSocketMessage(msg[0],msg[1],msg[2],null,null);
         String jsonString = "[{\"chatMessageSender\":" + "\"" + msg[1] + "\"" + ", \"chatMessageContent\":" + "\"" + msg[2] + "\"" + ", \"chatMessageTimestamp\":" + "\"" + timestamp + "\"" + "}]";
-        System.out.println(jsonString);
         for (WebSocketSession ses: clientSessions) {
             try {
                 ses.sendMessage(new TextMessage(jsonString));

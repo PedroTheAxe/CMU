@@ -42,12 +42,10 @@ public class MainActivity extends AppCompatActivity {
                 Response response = RequestHandler.buildLoginRequest(user, pass);
                 String responsePlaceholder = response.body().string();
                 if (responsePlaceholder.equals("Incorrect password") || responsePlaceholder.equals("No such user, register new account"))  {
-                    Log.e("TAGTAG","ESTOU AQUI");
                     Intent e = new Intent(getApplicationContext(), LoginActivity.class);
                     if (uri != null) {
                         splitUri = uri.toString().split("/");
                         e.putExtra("URI",splitUri[3]);
-                        Log.e("URI",splitUri[3]);
                     }
                     startActivity(e);
                     return;
@@ -57,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 String invite = null;
                 if (uri != null) {
                     splitUri = uri.toString().split("/");
-                    Log.e("URI",splitUri[3]);
                     Response response2 = RequestHandler.joinWithInviteRequest(user, splitUri[3]);
                 }
                 i.putExtra("userName", user);

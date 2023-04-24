@@ -114,8 +114,6 @@ public class ChatListActivity extends AppCompatActivity {
         Location locationB = new Location("Chat center");
         locationB.setLatitude(Double.parseDouble(entry.getString("chatLat")));
         locationB.setLongitude(Double.parseDouble(entry.getString("chatLon")));
-        Log.e("fixe", String.valueOf(location.distanceTo(locationB)));
-        Log.e("fixe", String.valueOf((Double.parseDouble(entry.getString("chatRadius")) * 1000)));
         if ((Double.parseDouble(entry.getString("chatRadius")) * 1000) >= location.distanceTo(locationB)) {
             return true;
         } else {

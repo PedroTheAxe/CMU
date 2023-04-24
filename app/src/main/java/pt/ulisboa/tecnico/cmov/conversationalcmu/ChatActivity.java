@@ -85,9 +85,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
-                    Log.e("test","reached the last element of recyclerview");
                     totalItemCount = layoutManager.getItemCount();
-                    Log.e("TAGTAG",String.valueOf(totalItemCount));
                     if (!recyclerView.canScrollVertically(1)) {
                         fetchData(totalItemCount);
                     }
@@ -212,12 +210,11 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onCloseReceived() {
                 webSocketClient.close();
-            } //fechar sessao com erro qd houver bug
+            }
         };
 
         webSocketClient.setConnectTimeout(10000);
         webSocketClient.setReadTimeout(60000);
-        //webSocketClient.enableAutomaticReconnection(5000);
         webSocketClient.connect();
 
     }
@@ -285,12 +282,9 @@ public class ChatActivity extends AppCompatActivity {
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() { //ver content type ou por tudo em cima uns dos outros e popular apenas de acordo com os fields
+            new ActivityResultCallback<ActivityResult>() { 
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    //setContentView(R.layout.chat_images);
-                    //ImageView imageView = (ImageView) findViewById(R.id.imagePicture);
-                    //Log.e("tag", String.valueOf(result.getResultCode()));
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         Bitmap bitmap = (Bitmap)data.getExtras().get("data");
@@ -301,11 +295,7 @@ public class ChatActivity extends AppCompatActivity {
                                 byteArrayBitmapStream);
                         byte[] b = byteArrayBitmapStream.toByteArray();
                         encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-                        //Log.e("tagtag",encodedImage);
-                        //Log.e("ootaooa",webSocketClient.toString());
                         webSocketClient.send("image/" + chatRoomName + "/" + userName + "/" + encodedImage);
-                        //Uri uri = data.getData(); //null in cam local password stored in phone guest account -- on bind chama o item e fico a ver
-                        //imageView.setImageBitmap(bitmap); //avisar opr websocket de imagem e ir buscar atraves de rest
                     }
                 }
             });

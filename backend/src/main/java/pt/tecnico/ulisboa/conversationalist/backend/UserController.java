@@ -32,7 +32,6 @@ public class UserController {
     public String loginUser(@RequestParam(value = "user") String user, @RequestParam(value = "pass") String pass) {
 
         List<User> userList = new ArrayList<>(this.repository.getUser());
-        System.out.println("aaaaaaaaaaaaaaaaa " + user);
         for (User username: userList) {
             if (username.getUsername().equals(user)) {
                 if (username.getPassword().equals(pass)) {

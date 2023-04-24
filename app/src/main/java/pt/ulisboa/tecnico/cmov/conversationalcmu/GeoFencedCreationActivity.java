@@ -59,29 +59,17 @@ import pt.ulisboa.tecnico.cmov.conversationalcmu.databinding.ActivityGeoFencedCr
 public class GeoFencedCreationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    // New variables for Current Place picker
     private static final String TAG = "MapsActivity";
     ListView lstPlaces;
     private PlacesClient mPlacesClient;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private Location mLastKnownLocation;
-
-    // A default location (Sydney, Australia) and default zoom to use when location permission is
-    // not granted.
     private final LatLng mDefaultLocation = new LatLng(-33.8523341, 151.2106085);
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean mLocationPermissionGranted;
-
-    // Used for selecting the Current Place.
-    private static final int M_MAX_ENTRIES = 5;
-    private String[] mLikelyPlaceNames;
-    private String[] mLikelyPlaceAddresses;
-    private String[] mLikelyPlaceAttributions;
-    private LatLng[] mLikelyPlaceLatLngs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +116,6 @@ public class GeoFencedCreationActivity extends AppCompatActivity implements OnMa
             {
                 Double lat = (double) (addresses.get(0).getLatitude());
                 Double lon = (double) (addresses.get(0).getLongitude());
-
                 Log.d("lat-long", "" + lat + "......." + lon);
                 LatLng user = new LatLng(lat, lon);
                 /*used marker for show the location */
@@ -153,12 +140,8 @@ public class GeoFencedCreationActivity extends AppCompatActivity implements OnMa
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_geolocate:
-
-                // COMMENTED OUT UNTIL WE DEFINE THE METHOD
-                // Present the current place picker
                 pickCurrentPlace();
                 return true;
-
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -207,8 +190,7 @@ public class GeoFencedCreationActivity extends AppCompatActivity implements OnMa
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
+     * This is where we can add markers or lines, add listeners or move the camera.
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
@@ -274,8 +256,6 @@ public class GeoFencedCreationActivity extends AppCompatActivity implements OnMa
                             mMap.moveCamera(CameraUpdateFactory
                                     .newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
                         }
-
-                        //getCurrentPlaceLikelihoods();
                     }
                 });
             }
